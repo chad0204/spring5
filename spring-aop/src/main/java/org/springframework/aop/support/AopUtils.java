@@ -222,7 +222,7 @@ public abstract class AopUtils {
 	 */
 	public static boolean canApply(Pointcut pc, Class<?> targetClass, boolean hasIntroductions) {
 		Assert.notNull(pc, "Pointcut must not be null");
-		if (!pc.getClassFilter().matches(targetClass)) {
+		if (!pc.getClassFilter().matches(targetClass)) {//1.目标类必须满足expression的匹配规则
 			return false;
 		}
 
@@ -243,6 +243,7 @@ public abstract class AopUtils {
 		}
 		classes.addAll(ClassUtils.getAllInterfacesForClassAsSet(targetClass));
 
+		//2.目标类中的方法必须满足expression的匹配规则，当然这里方法不是全部需要满足expression的匹配规则，有一个方法满足即可
 		for (Class<?> clazz : classes) {
 			Method[] methods = ReflectionUtils.getAllDeclaredMethods(clazz);
 			for (Method method : methods) {
@@ -307,7 +308,7 @@ public abstract class AopUtils {
 		}
 		List<Advisor> eligibleAdvisors = new ArrayList<>();
 		for (Advisor candidate : candidateAdvisors) {
-			if (candidate instanceof IntroductionAdvisor && canApply(candidate, clazz)) {
+			if (candidate instanceof IntroductionAdvisor && canApply(candidate, clazz)) {//canApply()匹配合适的advisor
 				eligibleAdvisors.add(candidate);
 			}
 		}
@@ -318,10 +319,10 @@ public abstract class AopUtils {
 				continue;
 			}
 			if (canApply(candidate, clazz, hasIntroductions)) {
-				eligibleAdvisors.add(candidate);
+				eligibleAdvisors.add(candidate);//
 			}
 		}
-		return eligibleAdvisors;
+		return eligibleAdvisors;//返回通知
 	}
 
 	/**

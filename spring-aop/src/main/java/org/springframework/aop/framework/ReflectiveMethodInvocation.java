@@ -155,6 +155,11 @@ public class ReflectiveMethodInvocation implements ProxyMethodInvocation, Clonea
 	}
 
 
+	/**
+	 * 递归调用
+	 * @return
+	 * @throws Throwable
+	 */
 	@Override
 	@Nullable
 	public Object proceed() throws Throwable {

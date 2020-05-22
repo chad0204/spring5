@@ -3,6 +3,7 @@ package com.pc.testaop;
 import com.pc.xmlbeans.aop.AuthController;
 import com.pc.xmlbeans.aop.UserService;
 import com.pc.xmlbeans.aop.impl.SecondUserServiceImpl;
+import com.pc.xmlbeans.noaop.NormalBean;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class TestAopXml {
@@ -34,10 +35,14 @@ public class TestAopXml {
 
 
         /**接口强制使用cglib之后fianl方法就不可以被切了，同时可以使用类来接收，需要配置*/
-        //不能使用类来接受jdk动态代理的对象，但强制使用cglib后可以
-        SecondUserServiceImpl secondUserService = (SecondUserServiceImpl) context.getBean("secondUserServiceImpl");
-        secondUserService.update();
-        secondUserService.finalMethod();//jdk动态代理final也可以切，强制使用cglib后不可以切
+        //不能使用类来接受jdk动态代理的对象,会报错，但强制使用cglib后可以
+//        SecondUserServiceImpl secondUserService = (SecondUserServiceImpl) context.getBean("secondUserServiceImpl");
+//        secondUserService.update();
+//        secondUserService.finalMethod();//jdk动态代理final也可以切，强制使用cglib后不可以切
+
+
+		NormalBean normalBean = (NormalBean) context.getBean("normalBean");
+		normalBean.noAop();
 
     }
 }

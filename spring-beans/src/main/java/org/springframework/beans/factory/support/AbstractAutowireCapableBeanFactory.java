@@ -426,7 +426,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		Object result = existingBean;
 		for (BeanPostProcessor processor : getBeanPostProcessors()) {
-			Object current = processor.postProcessAfterInitialization(result, beanName);
+			Object current = processor.postProcessAfterInitialization(result, beanName);//✨aop瞅这AbstractAutoProxyCreator
 			if (current == null) {
 				return result;
 			}
@@ -583,7 +583,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		// Eagerly cache singletons to be able to resolve circular references
 		// even when triggered by lifecycle interfaces like BeanFactoryAware.
-		//提前暴露单例bean的标志
+		//提前暴露单例bean的标志,beanName-ObjectFactory塞入singletonFactories
 		boolean earlySingletonExposure = (mbd.isSingleton() && this.allowCircularReferences &&
 				isSingletonCurrentlyInCreation(beanName));
 		if (earlySingletonExposure) {
@@ -615,7 +615,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			}
 		}
 
-		//提前曝光
 		if (earlySingletonExposure) {
 			//这里已经不允许从singletonFactories中获取factory进行创建了，从earlySingletonObjects中获取
 			Object earlySingletonReference = getSingleton(beanName, false);
@@ -1810,7 +1809,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 					beanName, "Invocation of init method failed", ex);
 		}
 		if (mbd == null || !mbd.isSynthetic()) {
-			//获取后置处理器，调用postProcessAfterInitialization
+			//获取后置处理器，调用postProcessAfterInitialization，aop也是BeanPostProcessor
 			wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
 		}
 

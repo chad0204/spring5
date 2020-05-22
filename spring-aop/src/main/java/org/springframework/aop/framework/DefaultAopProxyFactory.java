@@ -48,6 +48,12 @@ public class DefaultAopProxyFactory implements AopProxyFactory, Serializable {
 
 	@Override
 	public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {
+		/*
+		 * 1.对类使用cglib
+		 * 2.对接口使用jdk
+		 * 3.可以通过配置文件指定对接口使用CGLIB生成代理，proxy-target-class="true"
+		 *
+		 */
 		if (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config)) {
 			Class<?> targetClass = config.getTargetClass();
 			if (targetClass == null) {
