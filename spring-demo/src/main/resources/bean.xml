@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byName">
+
+
+	<bean id="demoBean" class="com.pc.xmlbeans.ioc.DemoBean" destroy-method="destroyMethod" init-method="initMethod"/>
+
+    <bean id="classBean" class="com.pc.xmlbeans.ioc.ClassBean" depends-on="demoBean" autowire="byType">
+		<!--<property name="demoBean" ref="demoBean"/>-->
+		<property name="addressList">
+			<list>
+				<value>INDIA</value>
+				<value>Pakistan</value>
+				<value>USA</value>
+				<value>USA</value>
+			</list>
+		</property>
+	</bean>
+
+    <!--lazy-init默认是false,即启动容器时就getBean初始化bean实例,如上面的classBean,而interfaceBean需要在调用getBean
+        时才会初始化-->
+
+    <!--lazy-init 设置只对scop属性为singleton的bean起作用,如果一个bean的scope属性为scope=“prototype“时，
+    即使设置了lazy-init="false"，容器启动时不实例化bean，而是调用getBean方法时实例化的-->
+    <bean id="interfaceBean" class="com.pc.xmlbeans.ioc.impl.InterfaceBeanImpl" lazy-init="true">
+        <property name="classBean" ref="classBean"></property>
+    </bean>
+
+
+	<bean id="myFactoryBean" class="com.pc.xmlbeans.ioc.factoryBean.MyFactoryBean">
+	</bean>
+
+	<!--测试BeanPostProcessor-->
+	<bean id="propertyProcessorBean" class="com.pc.xmlbeans.ioc.processor.PropertyProcessorBean">
+		<property name="name" value="chao"/>
+	</bean>
+	<bean id="annotationProcessorBean" class="com.pc.xmlbeans.ioc.processor.AnnotationProcessorBean">
+	</bean>
+	<bean id="usingProcessorBean" class="com.pc.xmlbeans.ioc.processor.UsingProcessorBean"/>
+
+
+	<!--循环依赖-->
+	<bean id="beanA" class="com.pc.xmlbeans.ioc.cycle.BeanA">
+		<!--<constructor-arg name="beanB" ref="beanB"/>-->
+		<property name="beanB" ref="beanB"/>
+	</bean>
+	<bean id="beanB" class="com.pc.xmlbeans.ioc.cycle.BeanB">
+		<!--<constructor-arg name="beanA" ref="beanA"/>-->
+		<property name="beanA" ref="beanA"/>
+	</bean>
+
+
+
+</beans>
