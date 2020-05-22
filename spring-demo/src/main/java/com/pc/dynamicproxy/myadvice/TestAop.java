@@ -5,6 +5,9 @@ import com.pc.dynamicproxy.myadvice.advice.BeforeAdvice;
 import com.pc.dynamicproxy.myadvice.advice.SurroundAdvice;
 import org.springframework.aop.framework.ProxyFactory;
 
+/**
+ * 使用spring的aop创建代理
+ */
 public class TestAop {
 
     public static void test01() {

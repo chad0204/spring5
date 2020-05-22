@@ -5,12 +5,10 @@ import com.pc.xmlbeans.aop.UserService;
 import com.pc.xmlbeans.aop.impl.SecondUserServiceImpl;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-public class TestXml {
+public class TestAopXml {
 
     public static void main(String[] args) {
         //创建Spring上下文（加载bean.xml）
-//        ApplicationContext acx= new ClassPathXmlApplicationContext("beans.xml");
-//        FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext("D:/workspace/work_20180709/springdemo/src/aop.xml");
         FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext("/spring-demo/src/main/resources/aop.xml");
 
         /**
@@ -35,7 +33,7 @@ public class TestXml {
         userService.finalMethod();//由于是jdk动态代理final也可以切
 
 
-        /**接口强制使用cglib之后fianl方法就不可以被切了，同时可以使用类来接收*/
+        /**接口强制使用cglib之后fianl方法就不可以被切了，同时可以使用类来接收，需要配置*/
         //不能使用类来接受jdk动态代理的对象，但强制使用cglib后可以
         SecondUserServiceImpl secondUserService = (SecondUserServiceImpl) context.getBean("secondUserServiceImpl");
         secondUserService.update();

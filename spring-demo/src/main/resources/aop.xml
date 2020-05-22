@@ -16,12 +16,12 @@
     <bean id="aspectBean" class="com.pc.xmlbeans.aop.config.AspectBean">
     </bean>
 
-    <!--<aop:config proxy-target-class="true">&lt;!&ndash;全部使用cglib&ndash;&gt;-->
+    <!--<aop:config proxy-target-class="true"/>-->
     <aop:config>
         <aop:aspect id="time" ref="aspectBean">
             <aop:pointcut id="addAllMethod" expression="execution(* com.pc.xmlbeans.aop.*.*())"/>
             <aop:before method="beforeAdvice" pointcut-ref="addAllMethod"/>
-            <aop:after method="beforeAdvice" pointcut-ref="addAllMethod"/>
+            <aop:after method="afterAdvice" pointcut-ref="addAllMethod"/>
         </aop:aspect>
     </aop:config>
 
