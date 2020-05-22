@@ -343,7 +343,8 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 			return bean;
 		}
 
-		// ✨Create proxy if we have advice.如果bean和advisor匹配，则返回，specificInterceptors就是一组通知
+		// ✨Create proxy if we have advice.如果bean和advisor通知器匹配，则返回，specificInterceptors就是一组通知
+		//通知器advisor将通知advice和pointcut连接起来
 		Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
 		if (specificInterceptors != DO_NOT_PROXY) {
 			this.advisedBeans.put(cacheKey, Boolean.TRUE);

@@ -30,6 +30,9 @@ import org.springframework.lang.Nullable;
  * with any pointcut and advice type, except for introductions. There is
  * normally no need to subclass this class, or to implement custom Advisors.
  *
+ * 这是最常用的Advisor实现。 它可以用于任何切入点和建议类型，除了introductions。
+ * 通常用于不需要这个类的子类，也不需要实现自定义Advisors。
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @see #setPointcut
