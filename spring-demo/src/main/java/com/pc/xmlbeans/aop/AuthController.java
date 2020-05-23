@@ -10,4 +10,9 @@ public class AuthController {
         System.out.println("AuthController finalMethod");
     }
 
+
+    public void specialMethod() {
+		System.out.println("AuthController specialMethod");
+	}
+
 }

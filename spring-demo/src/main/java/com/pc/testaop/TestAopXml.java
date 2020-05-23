@@ -21,6 +21,8 @@ public class TestAopXml {
         authController.update();
         authController.finalMethod();//由于是cglib动态代理final方法不可以切
 
+		authController.specialMethod();//环绕通知
+
 
         /**
          * JDK动态代理所用到的代理类在程序调用到代理类对象时才由JVM真正创建，JVM根据传进来的 业务实现类对象 以及 方法名 ，

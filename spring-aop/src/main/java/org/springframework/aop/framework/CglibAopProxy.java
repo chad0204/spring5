@@ -687,8 +687,10 @@ class CglibAopProxy implements AopProxy, Serializable {
 					retVal = methodProxy.invoke(target, argsToUse);
 				}
 				else {
-					// We need to create a method invocation...,✨proceed()递归调用chain中object
-					retVal = new CglibMethodInvocation(proxy, target, method, args, targetClass, chain, methodProxy).proceed();
+					// We need to create a method invocation...,
+					// ✨proceed()递归调用chain中object
+					retVal = new CglibMethodInvocation(proxy, target, method, args, targetClass, chain, methodProxy)
+							.proceed();//CglibMethodInvocation extends ReflectiveMethodInvocation
 				}
 				retVal = processReturnType(proxy, target, method, retVal);
 				return retVal;

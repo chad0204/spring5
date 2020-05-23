@@ -93,7 +93,7 @@ public class AdvisedSupport extends ProxyConfig implements Advised {
 	 * List of Advisors. If an Advice is added, it will be wrapped
 	 * in an Advisor before being added to this List.
 	 */
-	private List<Advisor> advisors = new ArrayList<>();
+	private List<Advisor> advisors = new ArrayList<>();//wrapIfNecessary()中获取，createProxy()中添加
 
 	/**
 	 * Array updated on changes to the advisors list, which is easier
@@ -476,10 +476,12 @@ public class AdvisedSupport extends ProxyConfig implements Advised {
 	 * @param targetClass the target class
 	 * @return a List of MethodInterceptors (may also include InterceptorAndDynamicMethodMatchers)
 	 */
+	//获取拦截器链
 	public List<Object> getInterceptorsAndDynamicInterceptionAdvice(Method method, @Nullable Class<?> targetClass) {
 		MethodCacheKey cacheKey = new MethodCacheKey(method);
-		List<Object> cached = this.methodCache.get(cacheKey);
+		List<Object> cached = this.methodCache.get(cacheKey);//使用缓存
 		if (cached == null) {
+			//✨ 获取拦截器链
 			cached = this.advisorChainFactory.getInterceptorsAndDynamicInterceptionAdvice(
 					this, method, targetClass);
 			this.methodCache.put(cacheKey, cached);

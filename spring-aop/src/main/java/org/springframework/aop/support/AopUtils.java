@@ -340,7 +340,7 @@ public abstract class AopUtils {
 
 		// Use reflection to invoke the method.
 		try {
-			ReflectionUtils.makeAccessible(method);
+			ReflectionUtils.makeAccessible(method);//开启设置
 			return method.invoke(target, args);
 		}
 		catch (InvocationTargetException ex) {

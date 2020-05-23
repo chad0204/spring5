@@ -20,6 +20,8 @@ public class UserServiceProxy implements InvocationHandler {
                 target.getClass().getInterfaces(), this);
     }
 
+
+	//这个invoke方法是作为JDK Proxy代理对象进行拦截的回调入口出现的。
     @Override
     public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
         Object result = null;

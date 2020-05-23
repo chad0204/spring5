@@ -120,7 +120,7 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 		}
 		Class<?>[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(this.advised, true);
 		findDefinedEqualsAndHashCodeMethods(proxiedInterfaces);
-		return Proxy.newProxyInstance(classLoader, proxiedInterfaces, this);
+		return Proxy.newProxyInstance(classLoader, proxiedInterfaces, this);//这里的this就是InvocationHandler
 	}
 
 	/**
@@ -150,6 +150,7 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 	 * Implementation of {@code InvocationHandler.invoke}.
 	 * <p>Callers will see exactly the exception thrown by the target,
 	 * unless a hook method throws an exception.
+	 * 这个invoke方法是作为JDK Proxy代理对象进行拦截的回调入口出现的。
 	 */
 	@Override
 	@Nullable
@@ -158,7 +159,7 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 		boolean setProxyContext = false;
 
 		TargetSource targetSource = this.advised.targetSource;
-		Object target = null;
+		Object target = null;//目标对象
 
 		try {
 			if (!this.equalsDefined && AopUtils.isEqualsMethod(method)) {
@@ -190,10 +191,10 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 
 			// Get as late as possible to minimize the time we "own" the target,
 			// in case it comes from a pool.
-			target = targetSource.getTarget();
+			target = targetSource.getTarget();//获取目标对象
 			Class<?> targetClass = (target != null ? target.getClass() : null);
 
-			// Get the interception chain for this method.拦截器链
+			// Get the interception chain for this method.获取拦截器链，
 			List<Object> chain = this.advised.getInterceptorsAndDynamicInterceptionAdvice(method, targetClass);
 
 			// Check whether we have any advice. If we don't, we can fallback on direct
@@ -203,14 +204,16 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 				// Note that the final invoker must be an InvokerInterceptor so we know it does
 				// nothing but a reflective operation on the target, and no hot swapping or fancy proxying.
 				Object[] argsToUse = AopProxyUtils.adaptArgumentsIfNecessary(method, args);
+				//没有拦截器链，反射调用method.invoke(target, args)
 				retVal = AopUtils.invokeJoinpointUsingReflection(target, method, argsToUse);
 			}
 			else {
 				// We need to create a method invocation...
+				//将target，chain作为输出，创建ReflectiveMethodInvocation对象
 				MethodInvocation invocation =
 						new ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);
 				// Proceed to the joinpoint through the interceptor chain.
-				retVal = invocation.proceed();
+				retVal = invocation.proceed();//沿着拦截器持续前进，proceed()递归调用
 			}
 
 			// Massage return value if necessary.

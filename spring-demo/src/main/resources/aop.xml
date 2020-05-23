@@ -15,6 +15,7 @@
     </bean>
 	<bean id="normalBean" class="com.pc.xmlbeans.noaop.NormalBean">
 	</bean>
+	<!--通知配置-->
     <bean id="aspectBean" class="com.pc.xmlbeans.aop.config.AspectBean">
     </bean>
 
@@ -23,9 +24,18 @@
         <aop:aspect id="time" ref="aspectBean">
             <aop:pointcut id="addAllMethod" expression="execution(* com.pc.xmlbeans.aop.*.*())"/>
             <aop:before method="beforeAdvice" pointcut-ref="addAllMethod"/>
-            <aop:after method="afterAdvice" pointcut-ref="addAllMethod"/>
+            <aop:after method="afterAdvice" pointcut-ref="addAllMethod"/><!--相当于是在finally中执行，一定会执行-->
+			<aop:after-returning method="afterReturningAdvice" pointcut-ref="addAllMethod"/><!--执行结束返回-->
         </aop:aspect>
     </aop:config>
+
+	<aop:config>
+		<aop:aspect id="time1" ref="aspectBean">
+			<aop:pointcut id="specialMethod" expression="execution(* com.pc.xmlbeans.aop.AuthController.specialMethod())"/>
+			<aop:around method="transaction" pointcut-ref="specialMethod"/>
+			<!--<aop:around method="invoke" pointcut-ref="specialMethod"/>-->
+		</aop:aspect>
+	</aop:config>
 
 
 </beans>

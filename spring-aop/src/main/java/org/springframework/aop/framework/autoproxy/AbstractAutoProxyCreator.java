@@ -344,7 +344,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		}
 
 		// ✨Create proxy if we have advice.如果bean和advisor通知器匹配，则返回，specificInterceptors就是一组通知
-		//通知器advisor将通知advice和pointcut连接起来
+		//通知器advisor将通知advice和pointcut连接起来,最后advisor会被注册到AdvisedSupport
 		Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
 		if (specificInterceptors != DO_NOT_PROXY) {
 			this.advisedBeans.put(cacheKey, Boolean.TRUE);
@@ -459,8 +459,9 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 			}
 		}
 
-		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
-		proxyFactory.addAdvisors(advisors);
+		//✨ 将advisors注册到AdvisedSupport
+		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);//构建advisor
+		proxyFactory.addAdvisors(advisors);//放入AdvisorSupport
 		proxyFactory.setTargetSource(targetSource);
 		customizeProxyFactory(proxyFactory);
 
