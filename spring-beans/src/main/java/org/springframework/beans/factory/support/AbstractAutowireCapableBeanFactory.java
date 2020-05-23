@@ -595,7 +595,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			//addSingletonFactory就是缓存bean的ObjectFactory，最终bean通过回调getObject调用getEarlyBeanReference，这里暂不执行getEarlyBeanReference,getEarlyBeanReference回调主要是一些后置处理器的逻辑，没有的化直接返回bean
 
 			//我很奇怪，获取bean直接通过缓存在singletonFactories中的ObjectFactory.getObject->getEarlyBeanReference来拿到半成品bean的
-			//根本没用到earlySingletonObjects，使用singletonFactories是为了可能需要wrapIfNecessary()处理
+			//使用singletonFactories是为了回调中可能需要wrapIfNecessary()处理,这就导致根本没用到earlySingletonObjects。
 			addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, mbd, bean));
 		}
 
