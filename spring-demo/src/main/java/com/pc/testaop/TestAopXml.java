@@ -1,9 +1,8 @@
 package com.pc.testaop;
 
-import com.pc.xmlbeans.aop.AuthController;
-import com.pc.xmlbeans.aop.UserService;
-import com.pc.xmlbeans.aop.impl.SecondUserServiceImpl;
-import com.pc.xmlbeans.noaop.NormalBean;
+import com.pc.testaop.xmlbeans.aop.AuthController;
+import com.pc.testaop.xmlbeans.aop.UserService;
+import com.pc.testaop.xmlbeans.noaop.NormalBean;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class TestAopXml {

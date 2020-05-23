@@ -5,9 +5,9 @@
        default-autowire="byName">
 
 
-	<bean id="demoBean" class="com.pc.xmlbeans.ioc.DemoBean" destroy-method="destroyMethod" init-method="initMethod"/>
+	<bean id="demoBean" class="com.pc.testioc.xmlBeans.ioc.DemoBean" destroy-method="destroyMethod" init-method="initMethod"/>
 
-    <bean id="classBean" class="com.pc.xmlbeans.ioc.ClassBean" depends-on="demoBean" autowire="byType">
+    <bean id="classBean" class="com.pc.testioc.xmlBeans.ioc.ClassBean" depends-on="demoBean" autowire="byType">
 		<!--<property name="demoBean" ref="demoBean"/>-->
 		<property name="addressList">
 			<list>
@@ -24,29 +24,29 @@
 
     <!--lazy-init 设置只对scop属性为singleton的bean起作用,如果一个bean的scope属性为scope=“prototype“时，
     即使设置了lazy-init="false"，容器启动时不实例化bean，而是调用getBean方法时实例化的-->
-    <bean id="interfaceBean" class="com.pc.xmlbeans.ioc.impl.InterfaceBeanImpl" lazy-init="true">
+    <bean id="interfaceBean" class="com.pc.testioc.xmlBeans.ioc.impl.InterfaceBeanImpl" lazy-init="true">
         <property name="classBean" ref="classBean"></property>
     </bean>
 
 
-	<bean id="myFactoryBean" class="com.pc.xmlbeans.ioc.factoryBean.MyFactoryBean">
+	<bean id="myFactoryBean" class="com.pc.testioc.xmlBeans.ioc.factoryBean.MyFactoryBean">
 	</bean>
 
 	<!--测试BeanPostProcessor-->
-	<bean id="propertyProcessorBean" class="com.pc.xmlbeans.ioc.processor.PropertyProcessorBean">
+	<bean id="propertyProcessorBean" class="com.pc.testioc.xmlBeans.ioc.processor.PropertyProcessorBean">
 		<property name="name" value="chao"/>
 	</bean>
-	<bean id="annotationProcessorBean" class="com.pc.xmlbeans.ioc.processor.AnnotationProcessorBean">
+	<bean id="annotationProcessorBean" class="com.pc.testioc.xmlBeans.ioc.processor.AnnotationProcessorBean">
 	</bean>
-	<bean id="usingProcessorBean" class="com.pc.xmlbeans.ioc.processor.UsingProcessorBean"/>
+	<bean id="usingProcessorBean" class="com.pc.testioc.xmlBeans.ioc.processor.UsingProcessorBean"/>
 
 
 	<!--循环依赖-->
-	<bean id="beanA" class="com.pc.xmlbeans.ioc.cycle.BeanA">
+	<bean id="beanA" class="com.pc.testioc.xmlBeans.ioc.cycle.BeanA">
 		<!--<constructor-arg name="beanB" ref="beanB"/>-->
 		<property name="beanB" ref="beanB"/>
 	</bean>
-	<bean id="beanB" class="com.pc.xmlbeans.ioc.cycle.BeanB">
+	<bean id="beanB" class="com.pc.testioc.xmlBeans.ioc.cycle.BeanB">
 		<!--<constructor-arg name="beanA" ref="beanA"/>-->
 		<property name="beanA" ref="beanA"/>
 	</bean>

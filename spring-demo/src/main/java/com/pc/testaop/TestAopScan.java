@@ -1,9 +1,9 @@
 package com.pc.testaop;
 
-import com.pc.annotationbeans.aop.AuthController;
-import com.pc.annotationbeans.aop.UserService;
-import com.pc.annotationbeans.aop.config.BeanConfig;
-import com.pc.annotationbeans.aop.impl.SecondUserServiceImpl;
+import com.pc.testaop.annotationbeans.aop.AuthController;
+import com.pc.testaop.annotationbeans.aop.UserService;
+import com.pc.testaop.annotationbeans.aop.config.BeanConfig;
+import com.pc.testaop.annotationbeans.aop.impl.SecondUserServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

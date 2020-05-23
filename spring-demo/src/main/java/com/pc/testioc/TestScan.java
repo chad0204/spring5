@@ -1,8 +1,8 @@
 package com.pc.testioc;
 
-import com.pc.annotationbeans.ioc.ClassBean;
-import com.pc.annotationbeans.ioc.InterfaceBean;
-import com.pc.annotationbeans.ioc.config.IoCBeanConfig;
+import com.pc.testioc.annotationbeans.ioc.ClassBean;
+import com.pc.testioc.annotationbeans.ioc.InterfaceBean;
+import com.pc.testioc.annotationbeans.ioc.config.IoCBeanConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class TestScan {

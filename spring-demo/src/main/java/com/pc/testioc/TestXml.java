@@ -1,10 +1,9 @@
 package com.pc.testioc;
 
-import com.pc.xmlbeans.ioc.ClassBean;
-import com.pc.xmlbeans.ioc.InterfaceBean;
-import com.pc.xmlbeans.ioc.cycle.BeanA;
-import com.pc.xmlbeans.ioc.cycle.BeanB;
-import com.pc.xmlbeans.ioc.processor.UsingProcessorBean;
+import com.pc.testioc.xmlBeans.ioc.ClassBean;
+import com.pc.testioc.xmlBeans.ioc.InterfaceBean;
+import com.pc.testioc.xmlBeans.ioc.cycle.BeanA;
+import com.pc.testioc.xmlBeans.ioc.processor.UsingProcessorBean;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class TestXml {
