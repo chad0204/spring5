@@ -17,4 +17,8 @@ public class Test {
 
 
 	}
+
+	public String transaction() {
+		return super.toString();
+	}
 }

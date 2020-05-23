@@ -14,4 +14,5 @@ repositories {
 dependencies {
     compile project(":spring-context")
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    runtime("mysql:mysql-connector-java:8.0.17")
 }

@@ -25,7 +25,7 @@
     <!--lazy-init 设置只对scop属性为singleton的bean起作用,如果一个bean的scope属性为scope=“prototype“时，
     即使设置了lazy-init="false"，容器启动时不实例化bean，而是调用getBean方法时实例化的-->
     <bean id="interfaceBean" class="com.pc.testioc.xmlBeans.ioc.impl.InterfaceBeanImpl" lazy-init="true">
-        <property name="classBean" ref="classBean"></property>
+        <property name="classBean" ref="classBean"/>
     </bean>
 
 
