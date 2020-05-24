@@ -52,5 +52,9 @@
 	</bean>
 
 
+	<!--监听容器发布-->
+	<bean id="applicationStartListener" class="com.pc.testioc.xmlBeans.ioc.listener.ApplicationStartListener"/>
+
+
 
 </beans>

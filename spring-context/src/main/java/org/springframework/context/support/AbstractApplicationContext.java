@@ -569,7 +569,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
-				//初始化容器的生命周期事件处理器，并发布容器的生命周期事件
+				//初始化容器的生命周期事件处理器，并发布容器的生命周期事件,发布ContextRefreshedEvent，关闭容器会发布ContextClosedEvent
 				finishRefresh();
 			}
 
