@@ -286,9 +286,10 @@ public class ContextLoader {
 					if (cwac.getParent() == null) {
 						// The context instance was injected without an explicit parent ->
 						// determine parent for root web application context, if any.
-						ApplicationContext parent = loadParentContext(servletContext);
+						ApplicationContext parent = loadParentContext(servletContext);//
 						cwac.setParent(parent);
 					}
+					//✨ refresh
 					configureAndRefreshWebApplicationContext(cwac, servletContext);
 				}
 			}
@@ -398,7 +399,7 @@ public class ContextLoader {
 		}
 
 		customizeContext(sc, wac);
-		wac.refresh();
+		wac.refresh();//启动springIoC
 	}
 
 	/**
