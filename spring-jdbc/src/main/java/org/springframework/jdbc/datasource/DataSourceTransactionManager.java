@@ -311,7 +311,9 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 	@Override
 	protected Object doSuspend(Object transaction) {
 		DataSourceTransactionObject txObject = (DataSourceTransactionObject) transaction;
+		//1.把当前事务的connectionHolder数据库连接持有者清空。
 		txObject.setConnectionHolder(null);
+		//2.当前线程解绑datasource.其实就是ThreadLocal移除对应变量
 		return TransactionSynchronizationManager.unbindResource(obtainDataSource());
 	}
 

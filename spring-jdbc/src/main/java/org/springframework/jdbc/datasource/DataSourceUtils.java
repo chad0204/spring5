@@ -101,6 +101,8 @@ public abstract class DataSourceUtils {
 	public static Connection doGetConnection(DataSource dataSource) throws SQLException {
 		Assert.notNull(dataSource, "No DataSource specified");
 
+		//把数据库连接放到事务管理中进行管理，TransactionSynchronizationManager中维护了一个ThreadLocal变量来将当前线程和connection绑定
+		//如果TransactionSynchronizationManager已经有了与当前线程绑定的connection，那直接取出来使用
 		ConnectionHolder conHolder = (ConnectionHolder) TransactionSynchronizationManager.getResource(dataSource);
 		if (conHolder != null && (conHolder.hasConnection() || conHolder.isSynchronizedWithTransaction())) {
 			conHolder.requested();

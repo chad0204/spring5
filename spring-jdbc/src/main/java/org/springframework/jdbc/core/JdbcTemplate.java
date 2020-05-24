@@ -319,6 +319,7 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 	@Override
 	@Nullable
 	public <T> T execute(ConnectionCallback<T> action) throws DataAccessException {
+		//执行连接
 		Assert.notNull(action, "Callback object must not be null");
 
 		Connection con = DataSourceUtils.getConnection(obtainDataSource());
@@ -366,8 +367,9 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 	@Override
 	@Nullable
 	public <T> T execute(StatementCallback<T> action) throws DataAccessException {
+		//执行sql
 		Assert.notNull(action, "Callback object must not be null");
-
+		//✨获取连接，这里的连接已经在spring事务管理之下
 		Connection con = DataSourceUtils.getConnection(obtainDataSource());
 		Statement stmt = null;
 		try {
@@ -434,6 +436,7 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 			@Override
 			@Nullable
 			public T doInStatement(Statement stmt) throws SQLException {
+				//查询结果集
 				ResultSet rs = null;
 				try {
 					rs = stmt.executeQuery(sql);

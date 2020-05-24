@@ -22,13 +22,15 @@ public class SecondService /*extends JdbcDaoSupport*/ {
 	@Transactional
 	public void addUser(Demo demo) {
 
-		int a = 1/0;
+		demo.setName("c");
+		String sql1 = "insert into t_transaction (name) values(?)";
+		jdbcTemplate.update(sql1, demo.getName());
 
+//		int a = 1/0;
 
-		String sql = "insert into t_transaction (name) values(?)";
-		jdbcTemplate.update(sql, demo.getName());
-
-		System.out.println("SecondService addUser");
+		demo.setName("d");
+		String sql2 = "insert into t_transaction (name) values(?)";
+		jdbcTemplate.update(sql2, demo.getName());
 	}
 
 }

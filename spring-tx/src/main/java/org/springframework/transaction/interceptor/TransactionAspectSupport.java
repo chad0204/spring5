@@ -279,33 +279,47 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 			final InvocationCallback invocation) throws Throwable {
 
 		// If the transaction attribute is null, the method is non-transactional.
+		//读取事务属性（隔离级别，传播行为），如果事务属性为NULL，则该方法为非transactional。
 		TransactionAttributeSource tas = getTransactionAttributeSource();
 		final TransactionAttribute txAttr = (tas != null ? tas.getTransactionAttribute(method, targetClass) : null);
+		//获取事务管理器，案例使用的是DataSourceTransactionManager。实现了创建事务，提交事务，回滚事务，事务挂起等操作
 		final PlatformTransactionManager tm = determineTransactionManager(txAttr);
-		final String joinpointIdentification = methodIdentification(method, targetClass, txAttr);
-
+		final String joinpointIdentification = methodIdentification(method, targetClass, txAttr);//切点
+		/*
+		 *
+		 * 下面区分PlatformTransactionManager，因为调用方式不同。
+		 * 对于CallbackPreferringPlatformTransactionManager，需要回调实现事务的提交回滚。
+		 * 非CallbackPreferringPlatformTransactionManage的管理器，不需要回调实现，如DataSourceTransactionManager
+		 *
+		 */
+		//申明式事务
 		if (txAttr == null || !(tm instanceof CallbackPreferringPlatformTransactionManager)) {
 			// Standard transaction demarcation with getTransaction and commit/rollback calls.
+			// 用getTransaction和commit/rollback调用进行标准的事务划分
+			//创建事务，同时把事务创建过程的信息放到TransactionInfo中，TransactionInfo保存当前事务状态
 			TransactionInfo txInfo = createTransactionIfNecessary(tm, txAttr, joinpointIdentification);
 
 			Object retVal;
 			try {
 				// This is an around advice: Invoke the next interceptor in the chain.
 				// This will normally result in a target object being invoked.
+				//invocation的回调方法proceedWithInvocation调用的还是proceed(),沿着拦截器链进行调用，最终执行目标方法
 				retVal = invocation.proceedWithInvocation();
 			}
 			catch (Throwable ex) {
 				// target invocation exception
-				completeTransactionAfterThrowing(txInfo, ex);
+				completeTransactionAfterThrowing(txInfo, ex);//根据具体情况回滚或提交
 				throw ex;
 			}
 			finally {
+				//这里把与线程绑定的TransactionInfo设置为oldTransactionInfo
 				cleanupTransactionInfo(txInfo);
 			}
+			//通过事务处理器进行事务提交
 			commitTransactionAfterReturning(txInfo);
 			return retVal;
 		}
-
+		//编程式事务，回调
 		else {
 			final ThrowableHolder throwableHolder = new ThrowableHolder();
 

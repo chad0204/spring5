@@ -29,10 +29,19 @@ public class FirstService /*extends JdbcDaoSupport*/ {
 
 //	@Transactional
 	public void addUser(Demo demo) {
-		String sql = "insert into t_transaction (name) values(?)";
-		jdbcTemplate.update(sql, demo.getName());
-		demo.setName("second-"+demo.getName());
-		System.out.println("FirstService addUser");
+
+		demo.setName("a");
+		String sql1 = "insert into t_transaction (name) values(?)";
+		jdbcTemplate.update(sql1, demo.getName());
+
+//		int a = 1/0;
+
+		demo.setName("b");
+		String sql2 = "insert into t_transaction (name) values(?)";
+		jdbcTemplate.update(sql2, demo.getName());
+
+
+
 		secondService.addUser(demo);
 
 	}

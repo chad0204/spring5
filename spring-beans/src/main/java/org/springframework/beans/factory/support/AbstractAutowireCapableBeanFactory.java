@@ -605,9 +605,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		try {
 			//✨ 这里对bean属性的依赖注入进行处理，返回依赖注入完成后的bean。
 			// 对属性值就行解析，包括注入的对象（递归getBean），集合，字符串等属性，然后将属性值填充到bean对象中
-			populateBean(beanName, mbd, instanceWrapper);
+			populateBean(beanName, mbd, instanceWrapper);//✨
 			//调用初始化方法、afterPropertiesSet方法以及BeanPostProcessor的after和before方法
-			exposedObject = initializeBean(beanName, exposedObject, mbd);
+			exposedObject = initializeBean(beanName, exposedObject, mbd);//✨
 		}
 		catch (Throwable ex) {
 			if (ex instanceof BeanCreationException && beanName.equals(((BeanCreationException) ex).getBeanName())) {

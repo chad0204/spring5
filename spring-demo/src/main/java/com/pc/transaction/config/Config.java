@@ -29,6 +29,7 @@ public class Config {
 	public JdbcTemplate jdbcTemplate() {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(driverManagerDataSource());
+		jdbcTemplate.setQueryTimeout(10000);
 		return jdbcTemplate;
 	}
 
