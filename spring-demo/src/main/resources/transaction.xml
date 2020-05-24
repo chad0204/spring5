@@ -16,12 +16,12 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
-	<bean id="firstService" class="com.pc.transaction.FirstService">
+	<bean id="firstService" class="com.pc.transaction.service.FirstService">
 		<property name="jdbcTemplate" ref="jdbcTemplate"/>
 		<property name="secondService" ref="secondService"/>
 	</bean>
 
-	<bean id="secondService" class="com.pc.transaction.SecondService">
+	<bean id="secondService" class="com.pc.transaction.service.SecondService">
 		<property name="jdbcTemplate" ref="jdbcTemplate"/>
 	</bean>
 
