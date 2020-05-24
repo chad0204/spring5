@@ -550,7 +550,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			throws BeanCreationException {
 
 		// Instantiate the bean.
-		// instanceWrapper是用来持有创建出来的bean对象的
+		// instanceWrapper是用来持有创建出来的bean对象的，ioc可以通过BeanWrapper,spring ioc容器可以用统一的方式来访问bean的属性，
+		// 装饰者模式
 		BeanWrapper instanceWrapper = null;
 		if (mbd.isSingleton()) {
 			//单例则先把缓存中的bean清除
@@ -1323,7 +1324,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				//获取实例化策略（默认CglibSubclassingInstantiationStrategy）
 				beanInstance = getInstantiationStrategy().instantiate(mbd, beanName, parent);
 			}
-			BeanWrapper bw = new BeanWrapperImpl(beanInstance);
+			BeanWrapper bw = new BeanWrapperImpl(beanInstance);//✨ 装饰者模式
 			initBeanWrapper(bw);
 			return bw;
 		}
