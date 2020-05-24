@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -27,8 +28,8 @@ public class FirstService /*extends JdbcDaoSupport*/ {
 		this.secondService = secondService;
 	}
 
-//	@Transactional
-	public void addUser(Demo demo) {
+//	@Transactional(propagation = Propagation.NEVER)
+	public void firstAdd(Demo demo) {
 
 		demo.setName("a");
 		String sql1 = "insert into t_transaction (name) values(?)";
@@ -42,7 +43,7 @@ public class FirstService /*extends JdbcDaoSupport*/ {
 
 
 
-		secondService.addUser(demo);
+		secondService.secondAdd(demo);
 
 	}
 }

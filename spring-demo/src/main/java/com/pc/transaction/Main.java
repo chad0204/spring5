@@ -26,7 +26,7 @@ public class Main {
 
 
 		Demo demo = new Demo();
-		service.addUser(demo);
+		service.firstAdd(demo);
 
 
 	}

@@ -459,9 +459,9 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 			}
 		}
 
-		//✨ 将advisors注册到AdvisedSupport
 		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);//构建advisor
-		proxyFactory.addAdvisors(advisors);//放入AdvisorSupport
+		//✨ 将advisors注册到AdvisedSupport。这里很重要，后面代理类invoke和intercept获取拦截器链就是这里设置的。
+		proxyFactory.addAdvisors(advisors);
 		proxyFactory.setTargetSource(targetSource);
 		customizeProxyFactory(proxyFactory);
 

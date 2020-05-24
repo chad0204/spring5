@@ -55,7 +55,7 @@ public class DefaultAdvisorChainFactory implements AdvisorChainFactory, Serializ
 		// but we need to preserve order in the ultimate list.
 		//标准单例模式获取DefaultAdvisorAdapterRegistry，这个registry对advice织入起了很大作用
 		AdvisorAdapterRegistry registry = GlobalAdvisorAdapterRegistry.getInstance();//只能适配before,afterReturn,throw
-		Advisor[] advisors = config.getAdvisors();//createProxy
+		Advisor[] advisors = config.getAdvisors();//advisors在createProxy中设置
 		List<Object> interceptorList = new ArrayList<>(advisors.length);
 		Class<?> actualClass = (targetClass != null ? targetClass : method.getDeclaringClass());
 		Boolean hasIntroductions = null;

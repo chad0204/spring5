@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -19,14 +21,14 @@ public class SecondService /*extends JdbcDaoSupport*/ {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	@Transactional
-	public void addUser(Demo demo) {
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void secondAdd(Demo demo) {
 
 		demo.setName("c");
 		String sql1 = "insert into t_transaction (name) values(?)";
 		jdbcTemplate.update(sql1, demo.getName());
 
-//		int a = 1/0;
+		int a = 1/0;
 
 		demo.setName("d");
 		String sql2 = "insert into t_transaction (name) values(?)";
