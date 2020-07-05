@@ -5,10 +5,10 @@
        default-autowire="byName">
 
 
-	<bean id="demoBean" class="com.pc.testioc.xmlBeans.ioc.DemoBean" destroy-method="destroyMethod" init-method="initMethod"/>
 
-    <bean id="classBean" class="com.pc.testioc.xmlBeans.ioc.ClassBean" depends-on="demoBean" autowire="byType">
-		<!--<property name="demoBean" ref="demoBean"/>-->
+
+    <bean id="classBean" class="com.pc.testioc.xmlBeans.ioc.ClassBean">
+		<property name="demoBean" ref="demoBean"/>
 		<property name="addressList">
 			<list>
 				<value>INDIA</value>
@@ -18,6 +18,9 @@
 			</list>
 		</property>
 	</bean>
+
+
+	<bean id="demoBean" class="com.pc.testioc.xmlBeans.ioc.DemoBean" destroy-method="destroyMethod" init-method="initMethod"/>
 
     <!--lazy-init默认是false,即启动容器时就getBean初始化bean实例,如上面的classBean,而interfaceBean需要在调用getBean
         时才会初始化-->

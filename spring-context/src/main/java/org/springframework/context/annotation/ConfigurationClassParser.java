@@ -164,6 +164,7 @@ class ConfigurationClassParser {
 			BeanDefinition bd = holder.getBeanDefinition();
 			try {
 				if (bd instanceof AnnotatedBeanDefinition) {
+					//普通的注解解析
 					parse(((AnnotatedBeanDefinition) bd).getMetadata(), holder.getBeanName());
 				}
 				else if (bd instanceof AbstractBeanDefinition && ((AbstractBeanDefinition) bd).hasBeanClass()) {
@@ -181,7 +182,7 @@ class ConfigurationClassParser {
 						"Failed to parse configuration class [" + bd.getBeanClassName() + "]", ex);
 			}
 		}
-
+		//✨ 解析启动类
 		this.deferredImportSelectorHandler.process();
 	}
 
@@ -239,6 +240,7 @@ class ConfigurationClassParser {
 		// Recursively process the configuration class and its superclass hierarchy.
 		SourceClass sourceClass = asSourceClass(configClass);
 		do {
+			//✨
 			sourceClass = doProcessConfigurationClass(configClass, sourceClass);
 		}
 		while (sourceClass != null);
@@ -299,6 +301,7 @@ class ConfigurationClassParser {
 		}
 
 		// Process any @Import annotations
+		//✨解析@Import
 		processImports(configClass, sourceClass, getImports(sourceClass), true);
 
 		// Process any @ImportResource annotations
@@ -563,6 +566,7 @@ class ConfigurationClassParser {
 							this.deferredImportSelectorHandler.handle(configClass, (DeferredImportSelector) selector);
 						}
 						else {
+							//✨这里可以看到，通过调用AutoConfigurationImportSelector的selectImports获取所有配置类
 							String[] importClassNames = selector.selectImports(currentSourceClass.getMetadata());
 							Collection<SourceClass> importSourceClasses = asSourceClasses(importClassNames);
 							processImports(configClass, currentSourceClass, importSourceClasses, false);
@@ -794,7 +798,9 @@ class ConfigurationClassParser {
 		}
 
 		public void processGroupImports() {
+			//✨先通过启动类注解的AutoConfigurationImportSelector获取到所有的configuration配置类，然后遍历所有的配置类进行解析
 			for (DeferredImportSelectorGrouping grouping : this.groupings.values()) {
+				//✨第一次是走grouping.getImports()里面的方法，执行AutoConfigurationImportSelector，拿到spring.factories下的所有配置类，循环遍历解析
 				grouping.getImports().forEach(entry -> {
 					ConfigurationClass configurationClass = this.configurationClasses.get(entry.getMetadata());
 					try {
@@ -865,7 +871,10 @@ class ConfigurationClassParser {
 		 * @return each import with its associated configuration class
 		 */
 		public Iterable<Group.Entry> getImports() {
+			//deferredImports里面存放的是启动类(配置类)和selector
 			for (DeferredImportSelectorHolder deferredImport : this.deferredImports) {
+				//getConfigurationClass()拿到启动类，最终拿到启动类上的AutoConfigurationImportSelector
+				//通过AutoConfigurationImportSelector的selectImports获取所有spring.factories下的配置类
 				this.group.process(deferredImport.getConfigurationClass().getMetadata(),
 						deferredImport.getImportSelector());
 			}

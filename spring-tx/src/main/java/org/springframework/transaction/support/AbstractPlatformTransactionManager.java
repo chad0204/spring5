@@ -590,6 +590,14 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	 */
 	@Nullable
 	protected final SuspendedResourcesHolder suspend(@Nullable Object transaction) throws TransactionException {
+		/*
+		 *
+		 * TODO
+		 *  事务挂起会引起死锁。
+		 *  假如数据库连接池最大为20，那么有11个以上的并发事务在执行中又被挂起，就会引起连接池死锁，因为在事务挂起时，所需连接数会翻倍，
+		 *  而当前事务被挂起后连接是无法释放的，新的事务再去获取连接就获取不到，造成死锁。
+		 *
+		 */
 		//1.当前存在同步
 		if (TransactionSynchronizationManager.isSynchronizationActive()) {
 			List<TransactionSynchronization> suspendedSynchronizations = doSuspendSynchronization();

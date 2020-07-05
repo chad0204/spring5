@@ -80,7 +80,7 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 	private static final Log logger = LogFactory.getLog(JdkDynamicAopProxy.class);
 
 	/** Config used to configure this proxy. */
-	private final AdvisedSupport advised;
+	private final AdvisedSupport advised;//持有通知器
 
 	/**
 	 * Is the {@link #equals} method defined on the proxied interfaces?

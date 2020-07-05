@@ -20,7 +20,6 @@ public class TestXml {
         InterfaceBean bean = acx.getBean("interfaceBean", InterfaceBean.class);//在xml中配置了lazy-init为true,所以初始化在getBean中发生，注解可以使用@Lazy
 
 
-
 		//测试BeanPostProcessor
 		UsingProcessorBean usingProcessorBean = acx.getBean("usingProcessorBean", UsingProcessorBean.class);
 		usingProcessorBean.sayHello();

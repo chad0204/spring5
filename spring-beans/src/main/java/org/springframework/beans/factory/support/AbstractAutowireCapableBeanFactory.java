@@ -558,7 +558,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);
 		}
 		if (instanceWrapper == null) {
-			//✨ 这里是创建bean的地方,对bean进行初始化，比如工厂方法创建，autowired注入，构造器等。使用反射（或cglib）对beanDifinition进行初始化
+			//✨ 这里是创建bean的地方,对bean进行初始化，比如工厂方法创建，autowired注入，构造器等。使用反射（或cglib）对beanDefinition进行初始化
 			//但是这里实例化的bean并没有属性值，wrapperObject只有属性名但没有值
 			instanceWrapper = createBeanInstance(beanName, mbd, args);//✨
 		}
